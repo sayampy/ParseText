@@ -1,2 +1,0 @@
-from ..textparser import Parser
-
