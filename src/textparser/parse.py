@@ -1,6 +1,6 @@
 import re
-from functools import wraps,partial
-#from test1 import _pattern
+from functools import wraps
+
 
 '''
 class ParserMeta(type):
