@@ -1,18 +1,12 @@
 import re
 from functools import wraps
 
-
-'''
-class ParserMeta(type):
-    @classmethod
-    def __prepare__(meta,*args,**kwargs):
-        return {'_':_pattern}'''
-
 class Parser():
+    patterns = {}
+
     def __init__(self,line_sep=r'\n'):
         self.line_sep=line_sep
 
-    patterns = {}
     def p(self,re_pattern,*args,**kwargs):
         '''Creates re pattern to parse'''
         def new_func(func):
@@ -25,18 +19,24 @@ class Parser():
         return new_func
 
     def split_line(self,text,maxsplit=0):
-        '''Split the tex to restart pattern matching'''
+        '''Split the text'''
         if type(self.line_sep)!=str or self.line_sep =='':
             raise Execption('SplitingLineError',
             f'''not a valid type, {type(self.line_sep)}''')
         return re.split(self.line_sep,text,maxsplit)
-    
+
     def update_line(self,rx,line,func_val):
+        '''Remove or replace the pattern with return function value
+        Ex:
+          1+2+1 = `1+2` will replaced by 3
+          then 3+1 will replaced by 4
+        '''
         if func_val==None:
             func_val=''
         return rx.sub(str(func_val),line,1)
 
     def parse(self,text):
+        parsed_lines=[]
         for line in self.split_line(text):
             line=line.strip()
             for pattern, func in self.patterns.items():
@@ -45,16 +45,5 @@ class Parser():
                     m = rx.match(line)
                     func_val = func(*m.groups(), **m.groupdict())
                     line=self.update_line(rx,line,func_val)
-
-
-# Test
-parser = Parser()
-
-digit = r'-?\d+'
-@parser.p(r'({digit})\s*\+\s*({digit})'.format(digit=digit))
-def add(*nums):
-    return sum(map(int,nums))
-@parser.p(r'({digit})'.format(digit=digit))
-def expr(num):
-    print(num)
-res = parser.parse('-2+3+2+2')
+            parsed_line.append(line)
+        return '\n'.join(parsed_lines)
