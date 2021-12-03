@@ -7,8 +7,8 @@ class Parser():
     def __init__(self,line_sep=r'\n'):
         self.line_sep=line_sep
 
-    def p(self,re_pattern,*args,**kwargs):
-        '''Creates re pattern to parse'''
+    def _(self,re_pattern,*args,**kwargs):
+        '''Creates re pattern function to parse'''
         def new_func(func):
             self.patterns[re_pattern]=func
 
@@ -22,7 +22,7 @@ class Parser():
         '''Split the text'''
         if type(self.line_sep)!=str or self.line_sep =='':
             raise Execption('SplitingLineError',
-            f'''not a valid type, {type(self.line_sep)}''')
+            f'''not a valid type, {self.line_sep}''')
         return re.split(self.line_sep,text,maxsplit)
 
     def update_line(self,rx,line,func_val):
@@ -36,7 +36,7 @@ class Parser():
         return rx.sub(str(func_val),line,1)
 
     def parse(self,text):
-        parsed_lines=[]
+        parsed_output=[]
         for line in self.split_line(text):
             line=line.strip()
             for pattern, func in self.patterns.items():
@@ -45,5 +45,5 @@ class Parser():
                     m = rx.match(line)
                     func_val = func(*m.groups(), **m.groupdict())
                     line=self.update_line(rx,line,func_val)
-            parsed_line.append(line)
-        return '\n'.join(parsed_lines)
+                parsed_output.append(func_val)
+        return parsed_output
