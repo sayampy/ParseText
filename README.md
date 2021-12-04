@@ -15,9 +15,10 @@ from textparser import Parser
 p = Parser()
 
 @p._(r'<re.pattern>')
-def function(*args,**kwargs):
-   #do something
+def function(args,kwargs):
+   #<do something>
+p.parse(<text>)
 ```
 ## Want to Contribute?
 ![](https://c.tenor.com/ikmzhcmdj6EAAAAM/looking-looking-good.gif)
-🙄👉👈
+<br>🙄👉👈
