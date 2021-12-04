@@ -20,5 +20,4 @@ def function(args,kwargs):
 p.parse(<text>)
 ```
 ## Want to Contribute?
-![](https://c.tenor.com/ikmzhcmdj6EAAAAM/looking-looking-good.gif)
-<br>🙄👉👈
+🙄👉👈
