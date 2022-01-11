@@ -1,4 +1,4 @@
-# ParseAnyText
+# ParseText
 [![GitHub license](https://img.shields.io/github/license/sayampy/ParseAnyText)](https://github.com/sayampy/ParseAnyText/blob/main/LICENSE)
 
 A small package to parse strings.
@@ -19,5 +19,4 @@ def function(args,kwargs):
    #<do something>
 p.parse(<text>)
 ```
-## Want to Contribute?
-🙄👉👈
+
